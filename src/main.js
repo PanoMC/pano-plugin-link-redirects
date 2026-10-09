@@ -1,7 +1,6 @@
 import {PanoPlugin, viewComponent} from '@panomc/sdk';
-import {derived} from 'svelte/store';
-import {_ as i18n} from '@panomc/sdk/utils/language';
-import ApiUtil from '@panomc/sdk/utils/api';
+import { derived } from 'svelte/store';
+import { api } from '@panomc/sdk/plugin-api';
 
 const pluginId = 'pano-plugin-link-redirects';
 
@@ -10,6 +9,7 @@ export const _ = derived(i18n, ($_fn) => {
   return (key, options) => $_fn(`plugins.${pluginId}.${key}`, options);
 });
 
+import { _ as i18n } from '@panomc/sdk/utils/language';
 import { showToast } from '@panomc/sdk/toasts';
 
 // Success/failure colouring for this plugin's toasts, matching the panel. showToast from
@@ -62,8 +62,6 @@ export default class PanoLinkRedirectsPlugin extends PanoPlugin {
       });
     } else {
       // Theme Redirection Logic
-      const redirectPageComponent = viewComponent(() => import('./theme/RedirectPage.svelte'));
-
       // SSR runs in a long-lived Node process where `registeredPages` and `siteNavLinks` are
       // module-level state. `theme:app:load` fires on every request, but plugin re-init is
       // cached by plugin-version hash — so without an explicit unregister step, entries for
@@ -75,16 +73,16 @@ export default class PanoLinkRedirectsPlugin extends PanoPlugin {
       pano.ui.app.onLoad(async (data, event) => {
         // Fetch active redirects to register their routes
         try {
-          const res = await ApiUtil.get({
-            path: '/api/link-redirects',
+          const res = await api.get({
+            path: '/link-redirects',
             request: event
           });
 
-          if (!res || !Array.isArray(res.redirects)) return;
+          if (!res || !Array.isArray(res.items)) return;
 
-          const incomingPaths = new Set(res.redirects.map((r) => r.path));
+          const incomingPaths = new Set(res.items.map((r) => r.path));
           const incomingNavHrefs = new Set(
-            res.redirects.filter((r) => r.showInNavigation).map((r) => r.path)
+            res.items.filter((r) => r.showInNavigation).map((r) => r.path)
           );
 
           // Drop route entries we previously registered that are no longer in the response.
@@ -110,12 +108,12 @@ export default class PanoLinkRedirectsPlugin extends PanoPlugin {
             for (const href of navHrefsToRemove) navAddedHrefs.delete(href);
           }
 
-          res.redirects.forEach((redirect) => {
+          res.items.forEach((redirect) => {
             // Register dynamic route for each redirect (idempotent: register overwrites
             // by path, so updates to delay/permission/etc. propagate without a stale entry).
             pano.ui.page.register({
               path: redirect.path,
-              component: redirectPageComponent,
+              view: 'redirects:RedirectPage',
               loginRequired: redirect.requireLogin,
               permission: redirect.requirePermission ? redirect.permissionNode : null,
               resetLayout: true, // Always reset layout for redirects as per user request

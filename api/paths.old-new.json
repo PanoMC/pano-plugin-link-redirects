@@ -1,0 +1,50 @@
+[
+  {
+    "method": "GET",
+    "old": "/api/link-redirects",
+    "new": "/api/plugins/pano-plugin-link-redirects/link-redirects",
+    "relative": "/plugins/pano-plugin-link-redirects/link-redirects",
+    "class": "GetLinkRedirectsAPI",
+    "file": "src/main/kotlin/com/panomc/plugins/linkredirect/routes/api/GetLinkRedirectsAPI.kt"
+  },
+  {
+    "method": "GET",
+    "old": "/api/link-redirects/check",
+    "new": "/api/plugins/pano-plugin-link-redirects/link-redirects/check",
+    "relative": "/plugins/pano-plugin-link-redirects/link-redirects/check",
+    "class": "GetLinkRedirectByPathAPI",
+    "file": "src/main/kotlin/com/panomc/plugins/linkredirect/routes/api/GetLinkRedirectByPathAPI.kt"
+  },
+  {
+    "method": "GET",
+    "old": "/api/panel/link-redirects",
+    "new": "/api/plugins/pano-plugin-link-redirects/panel/link-redirects",
+    "relative": "/plugins/pano-plugin-link-redirects/panel/link-redirects",
+    "class": "PanelGetLinkRedirectsAPI",
+    "file": "src/main/kotlin/com/panomc/plugins/linkredirect/routes/panel/PanelGetLinkRedirectsAPI.kt"
+  },
+  {
+    "method": "POST",
+    "old": "/api/panel/link-redirects",
+    "new": "/api/plugins/pano-plugin-link-redirects/panel/link-redirects",
+    "relative": "/plugins/pano-plugin-link-redirects/panel/link-redirects",
+    "class": "PanelAddLinkRedirectAPI",
+    "file": "src/main/kotlin/com/panomc/plugins/linkredirect/routes/panel/PanelAddLinkRedirectAPI.kt"
+  },
+  {
+    "method": "DELETE",
+    "old": "/api/panel/link-redirects/:id",
+    "new": "/api/plugins/pano-plugin-link-redirects/panel/link-redirects/:id",
+    "relative": "/plugins/pano-plugin-link-redirects/panel/link-redirects/:id",
+    "class": "PanelDeleteLinkRedirectAPI",
+    "file": "src/main/kotlin/com/panomc/plugins/linkredirect/routes/panel/PanelDeleteLinkRedirectAPI.kt"
+  },
+  {
+    "method": "PUT",
+    "old": "/api/panel/link-redirects/:id",
+    "new": "/api/plugins/pano-plugin-link-redirects/panel/link-redirects/:id",
+    "relative": "/plugins/pano-plugin-link-redirects/panel/link-redirects/:id",
+    "class": "PanelUpdateLinkRedirectAPI",
+    "file": "src/main/kotlin/com/panomc/plugins/linkredirect/routes/panel/PanelUpdateLinkRedirectAPI.kt"
+  }
+]

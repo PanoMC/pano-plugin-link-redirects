@@ -12,8 +12,10 @@ import com.panomc.plugins.linkredirect.LinkRedirectPlugin
 import com.panomc.plugins.linkredirect.db.dao.LinkRedirectDao
 import io.vertx.ext.web.RoutingContext
 import io.vertx.ext.web.validation.ValidationHandler
-import io.vertx.ext.web.validation.builder.ValidationHandlerBuilder
+import com.panomc.platform.schema.dsl.ValidationHandlerBuilder
 import io.vertx.json.schema.SchemaRepository
+import com.panomc.platform.schema.EndpointDoc
+import io.vertx.json.schema.common.dsl.Schemas.*
 
 @Endpoint
 class GetLinkRedirectByPathAPI(
@@ -21,7 +23,24 @@ class GetLinkRedirectByPathAPI(
     private val linkRedirectDao: LinkRedirectDao
 ) : Api() {
 
-    override val paths = listOf(Path("/api/link-redirects/check", RouteType.GET))
+    override val paths = listOf(Path("/link-redirects/check", RouteType.GET))
+
+    override val doc = EndpointDoc(
+        summary = "One redirect by its path, when the visitor may use it.",
+        tag = "link-redirects",
+        response = objectSchema()
+            .requiredProperty("requireLogin", booleanSchema())
+            .requiredProperty("requirePermission", booleanSchema())
+            .requiredProperty("delay", intSchema())
+            .requiredProperty("targetUrl", stringSchema())
+            .requiredProperty("showIntermediatePage", booleanSchema())
+            .requiredProperty("intermediatePageDesign", stringSchema().nullable())
+            .requiredProperty("useCustomPage", booleanSchema())
+            .requiredProperty("openInNewTab", booleanSchema())
+            .requiredProperty("htmlContent", stringSchema().nullable())
+            .requiredProperty("allowed", booleanSchema()),
+        errors = listOf(NotFound::class, NotLoggedIn::class, NoPermission::class)
+    )
 
     private val databaseManager: DatabaseManager by lazy {
         plugin.applicationContext.getBean(DatabaseManager::class.java)

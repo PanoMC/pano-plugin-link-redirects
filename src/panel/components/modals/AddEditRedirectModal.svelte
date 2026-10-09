@@ -288,7 +288,7 @@
 
 <script>
   import { onMount } from 'svelte';
-  import ApiUtil from '@panomc/sdk/utils/api';
+  import { api } from '@panomc/sdk/plugin-api';
   import { Editor } from '@panomc/sdk/components/panel';
   import { _, showSuccessToast, showErrorToast } from '../../../main';
 
@@ -337,13 +337,13 @@
 
     try {
       if ($mode === 'create') {
-        res = await ApiUtil.post({
-          path: '/api/panel/link-redirects',
+        res = await api.panel.post({
+          path: '/link-redirects',
           body: $formData,
         });
       } else {
-        res = await ApiUtil.put({
-          path: `/api/panel/link-redirects/${$formData.id}`,
+        res = await api.panel.put({
+          path: `/link-redirects/${$formData.id}`,
           body: $formData,
         });
       }

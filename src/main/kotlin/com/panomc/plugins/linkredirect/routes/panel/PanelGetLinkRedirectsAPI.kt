@@ -9,7 +9,7 @@ import com.panomc.plugins.linkredirect.db.dao.LinkRedirectDao
 import com.panomc.plugins.linkredirect.permission.ManageRedirectsPermission
 import io.vertx.ext.web.RoutingContext
 import io.vertx.ext.web.validation.ValidationHandler
-import io.vertx.ext.web.validation.builder.ValidationHandlerBuilder
+import com.panomc.platform.schema.dsl.ValidationHandlerBuilder
 import io.vertx.json.schema.SchemaRepository
 
 @Endpoint
@@ -17,7 +17,7 @@ class PanelGetLinkRedirectsAPI(
     private val plugin: LinkRedirectPlugin,
     private val linkRedirectDao: LinkRedirectDao
 ) : PanelApi() {
-    override val paths = listOf(Path("/api/panel/link-redirects", RouteType.GET))
+    override val paths = listOf(Path("/link-redirects", RouteType.GET))
 
     private val authProvider: AuthProvider by lazy {
         plugin.applicationContext.getBean(AuthProvider::class.java)
@@ -28,26 +28,20 @@ class PanelGetLinkRedirectsAPI(
     }
 
     override fun getValidationHandler(schemaRepository: SchemaRepository): ValidationHandler =
-        ValidationHandlerBuilder.create(schemaRepository)
-            .build()
+        Paging.params(ValidationHandlerBuilder.create(schemaRepository)).build()
 
     override suspend fun handle(context: RoutingContext): Result {
         authProvider.requirePermission(ManageRedirectsPermission(), context)
 
-        val page = context.request().getParam("page")?.toIntOrNull() ?: 1
+        val page = Paging.request(context)
         val sqlClient = databaseManager.getSqlClient()
-        
-        val redirects = linkRedirectDao.getAll(page, sqlClient)
-        val totalCount = linkRedirectDao.count(sqlClient)
-        val totalPage = (totalCount + 9) / 10
 
-        return Successful(
-            mapOf(
-                "redirects" to redirects,
-                "totalCount" to totalCount,
-                "totalPage" to totalPage,
-                "page" to page
-            )
-        )
+        val totalCount = linkRedirectDao.count(sqlClient)
+
+        Paging.requireInRange(page, totalCount)
+
+        val redirects = linkRedirectDao.getAll(page, sqlClient)
+
+        return Successful(Paging.response(redirects, totalCount, page))
     }
 }

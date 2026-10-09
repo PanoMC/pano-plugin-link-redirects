@@ -60,7 +60,7 @@
 </script>
 
 <script>
-  import ApiUtil from '@panomc/sdk/utils/api';
+  import { api } from '@panomc/sdk/plugin-api';
   import { _, showSuccessToast, showErrorToast } from '../../../main';
 
   let loading = false;
@@ -69,8 +69,8 @@
     if (!$redirect) return;
     loading = true;
 
-    const res = await ApiUtil.delete({
-      path: `/api/panel/link-redirects/${$redirect.id}`,
+    const res = await api.panel.delete({
+      path: `/link-redirects/${$redirect.id}`,
     });
 
     loading = false;

@@ -1,6 +1,7 @@
 package com.panomc.plugins.linkredirect.db.impl
 
 import com.panomc.platform.annotation.Dao
+import com.panomc.platform.model.PageRequest
 import com.panomc.plugins.linkredirect.db.dao.LinkRedirectDao
 import com.panomc.plugins.linkredirect.db.model.LinkRedirect
 import io.vertx.kotlin.coroutines.coAwait
@@ -120,10 +121,9 @@ class LinkRedirectDaoImpl : LinkRedirectDao() {
         return rows.toModels().firstOrNull()
     }
 
-    override suspend fun getAll(page: Int, sqlClient: SqlClient): List<LinkRedirect> {
-        val offset = (page - 1) * 10
-        val rows = sqlClient.preparedQuery("SELECT * FROM `${getTablePrefix() + tableName}` ORDER BY `id` DESC LIMIT 10 OFFSET ?")
-            .execute(Tuple.of(offset)).coAwait()
+    override suspend fun getAll(page: PageRequest, sqlClient: SqlClient): List<LinkRedirect> {
+        val rows = sqlClient.preparedQuery("SELECT * FROM `${getTablePrefix() + tableName}` ORDER BY `id` DESC LIMIT ? OFFSET ?")
+            .execute(Tuple.of(page.limit, page.offset)).coAwait()
         return rows.toModels()
     }
 

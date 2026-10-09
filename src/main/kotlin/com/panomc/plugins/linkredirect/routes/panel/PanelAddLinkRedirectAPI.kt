@@ -13,7 +13,7 @@ import com.panomc.plugins.linkredirect.permission.ManageRedirectsPermission
 import io.vertx.ext.web.RoutingContext
 import io.vertx.ext.web.validation.RequestPredicate
 import io.vertx.ext.web.validation.ValidationHandler
-import io.vertx.ext.web.validation.builder.ValidationHandlerBuilder
+import com.panomc.platform.schema.dsl.ValidationHandlerBuilder
 import io.vertx.json.schema.SchemaRepository
 import io.vertx.json.schema.common.dsl.Schemas.*
 
@@ -22,7 +22,7 @@ class PanelAddLinkRedirectAPI(
     private val plugin: LinkRedirectPlugin,
     private val linkRedirectDao: LinkRedirectDao
 ) : PanelApi() {
-    override val paths = listOf(Path("/api/panel/link-redirects", RouteType.POST))
+    override val paths = listOf(Path("/link-redirects", RouteType.POST))
 
     private val authProvider: AuthProvider by lazy {
         plugin.applicationContext.getBean(AuthProvider::class.java)
@@ -35,7 +35,7 @@ class PanelAddLinkRedirectAPI(
     override fun getValidationHandler(schemaRepository: SchemaRepository): ValidationHandler =
         ValidationHandlerBuilder.create(schemaRepository)
             .body(
-                io.vertx.ext.web.validation.builder.Bodies.json(
+                com.panomc.platform.schema.dsl.Bodies.json(
                     objectSchema()
                         .requiredProperty("title", stringSchema())
                         .requiredProperty("path", stringSchema())

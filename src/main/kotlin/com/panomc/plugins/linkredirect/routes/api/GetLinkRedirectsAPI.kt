@@ -7,15 +7,40 @@ import com.panomc.plugins.linkredirect.LinkRedirectPlugin
 import com.panomc.plugins.linkredirect.db.dao.LinkRedirectDao
 import io.vertx.ext.web.RoutingContext
 import io.vertx.ext.web.validation.ValidationHandler
-import io.vertx.ext.web.validation.builder.ValidationHandlerBuilder
+import com.panomc.platform.schema.dsl.ValidationHandlerBuilder
 import io.vertx.json.schema.SchemaRepository
+import com.panomc.platform.schema.EndpointDoc
+import io.vertx.json.schema.common.dsl.Schemas.*
 
 @Endpoint
 class GetLinkRedirectsAPI(
     private val plugin: LinkRedirectPlugin,
     private val linkRedirectDao: LinkRedirectDao
 ) : Api() {
-    override val paths = listOf(Path("/api/link-redirects", RouteType.GET))
+    override val paths = listOf(Path("/link-redirects", RouteType.GET))
+
+    override val doc = EndpointDoc(
+        summary = "The link redirects, for the navigation and the redirect page.",
+        tag = "link-redirects",
+        response = objectSchema()
+            .requiredProperty(
+                "items",
+                arraySchema().items(
+                    objectSchema()
+                    .requiredProperty("title", stringSchema())
+                    .requiredProperty("path", stringSchema())
+                    .requiredProperty("targetUrl", stringSchema())
+                    .requiredProperty("delay", intSchema())
+                    .requiredProperty("showIntermediatePage", booleanSchema())
+                    .requiredProperty("intermediatePageDesign", stringSchema().nullable())
+                    .requiredProperty("openInNewTab", booleanSchema())
+                    .requiredProperty("showInNavigation", booleanSchema())
+                    .requiredProperty("requireLogin", booleanSchema())
+                    .requiredProperty("requirePermission", booleanSchema())
+                    .requiredProperty("permissionNode", stringSchema().nullable())
+                )
+            )
+    )
 
     private val databaseManager: DatabaseManager by lazy {
         plugin.applicationContext.getBean(DatabaseManager::class.java)
@@ -45,6 +70,6 @@ class GetLinkRedirectsAPI(
             )
         }
 
-        return Successful(mapOf("redirects" to response))
+        return Successful(mapOf("items" to response))
     }
 }

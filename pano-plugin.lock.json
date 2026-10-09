@@ -1,0 +1,27 @@
+{
+  "controllers": {},
+  "format": 1,
+  "views": {
+    "redirects:RedirectPage": {
+      "classes": [
+        "redirects-redirect-page",
+        "redirects-redirect-page__card",
+        "redirects-redirect-page__custom-content",
+        "redirects-redirect-page__loader",
+        "redirects-redirect-page__overlay",
+        "redirects-redirect-page__progress",
+        "redirects-redirect-page__progress-bar",
+        "redirects-redirect-page__title",
+        "redirects-redirect-page__url"
+      ],
+      "contract": 1,
+      "hooks": [],
+      "props": {
+        "data": {
+          "required": true
+        }
+      },
+      "slots": []
+    }
+  }
+}
