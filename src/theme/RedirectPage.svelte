@@ -173,6 +173,18 @@
     };
   }
 
+  /** Only http(s) URLs and paths on this site are followed, never javascript: or other schemes. */
+  export function isSafeTargetUrl(url) {
+    if (typeof url !== 'string' || url.trim() === '' || /[\u0000-\u001f\u007f]/.test(url)) return false;
+    if (url.startsWith('/') && !url.startsWith('//') && !url.startsWith('/\\')) return true;
+    try {
+      const parsed = new URL(url);
+      return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+    } catch (e) {
+      return false;
+    }
+  }
+
   export async function load(event) {
     const currentPath = event.url.pathname;
 
@@ -189,6 +201,10 @@
     }
 
     const redirect = normalizeRedirectPayload(res);
+
+    if (!isSafeTargetUrl(redirect?.targetUrl)) {
+      return error(404, 'Redirect not found or access denied');
+    }
 
     // Instant HTTP redirect when there is no page to render. openInNewTab only sets nav target=_blank
     // (redirect path opens in a new tab); SSR still responds with 302 so that tab follows to the final URL.
@@ -253,7 +269,7 @@
   });
 
   function performRedirect() {
-    if (!redirect) return;
+    if (!redirect || !isSafeTargetUrl(redirect.targetUrl)) return;
     // Same-tab navigation: "open in new tab" applies only to nav links (target _blank on the redirect path).
     window.location.href = redirect.targetUrl;
   }

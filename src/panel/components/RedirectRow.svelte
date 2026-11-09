@@ -66,7 +66,7 @@
   <td class="align-middle">
     <div class="text-truncate" style="max-width: 250px;">
       <a
-        href={redirect.targetUrl}
+        href={/^(https?:\/\/|\/(?![\/\\]))/i.test(redirect.targetUrl || '') ? redirect.targetUrl : undefined}
         target="_blank"
         rel="noopener noreferrer"
         title={$_('common.view')}

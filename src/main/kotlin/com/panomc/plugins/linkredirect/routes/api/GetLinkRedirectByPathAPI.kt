@@ -1,5 +1,6 @@
 package com.panomc.plugins.linkredirect.routes.api
 
+import com.panomc.plugins.linkredirect.util.RedirectSafety
 import com.panomc.platform.annotation.Endpoint
 import com.panomc.platform.auth.AuthProvider
 import com.panomc.platform.auth.PermissionManager
@@ -78,6 +79,11 @@ class GetLinkRedirectByPathAPI(
             }
         }
 
+        // Rows saved before targets and custom pages were checked are cleaned here too.
+        if (!RedirectSafety.isSafeTargetUrl(redirect.targetUrl)) {
+            throw NotFound()
+        }
+
         val response = mapOf(
             "requireLogin" to redirect.requireLogin,
             "requirePermission" to redirect.requirePermission,
@@ -87,7 +93,7 @@ class GetLinkRedirectByPathAPI(
             "intermediatePageDesign" to redirect.intermediatePageDesign,
             "useCustomPage" to redirect.useCustomPage,
             "openInNewTab" to redirect.openInNewTab,
-            "htmlContent" to redirect.htmlContent,
+            "htmlContent" to RedirectSafety.sanitizeHtml(redirect.htmlContent),
             "allowed" to true
         )
 

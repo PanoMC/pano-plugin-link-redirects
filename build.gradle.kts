@@ -106,6 +106,9 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.springframework/spring-context
     compileOnly("org.springframework:spring-context:${springContextVersion}")
+
+    // Cleans the custom redirect page HTML; bundled into the plugin jar.
+    implementation("org.jsoup:jsoup:1.21.1")
 }
 
 tasks {

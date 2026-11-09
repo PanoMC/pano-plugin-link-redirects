@@ -1,5 +1,6 @@
 package com.panomc.plugins.linkredirect.routes.panel
 
+import com.panomc.plugins.linkredirect.util.RedirectSafety
 import com.panomc.platform.annotation.Endpoint
 import com.panomc.platform.auth.AuthProvider
 import com.panomc.platform.db.DatabaseManager
@@ -73,6 +74,10 @@ class PanelAddLinkRedirectAPI(
             throw BadRequest()
         }
 
+        if (!RedirectSafety.isSafeTargetUrl(targetUrl)) {
+            throw BadRequest()
+        }
+
         if (data.getBoolean("requirePermission") == true && data.getString("permissionNode").isNullOrBlank()) {
             throw BadRequest()
         }
@@ -97,7 +102,7 @@ class PanelAddLinkRedirectAPI(
             requireLogin = data.getBoolean("requireLogin") ?: false,
             requirePermission = data.getBoolean("requirePermission") ?: false,
             permissionNode = data.getString("permissionNode"),
-            htmlContent = data.getString("htmlContent")
+            htmlContent = RedirectSafety.sanitizeHtml(data.getString("htmlContent"))
         )
 
         linkRedirectDao.add(redirect, sqlClient)
