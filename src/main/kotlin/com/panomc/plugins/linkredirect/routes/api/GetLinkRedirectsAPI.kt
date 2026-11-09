@@ -29,7 +29,7 @@ class GetLinkRedirectsAPI(
                     objectSchema()
                     .requiredProperty("title", stringSchema())
                     .requiredProperty("path", stringSchema())
-                    .requiredProperty("targetUrl", stringSchema())
+                    .requiredProperty("targetUrl", stringSchema().nullable())
                     .requiredProperty("delay", intSchema())
                     .requiredProperty("showIntermediatePage", booleanSchema())
                     .requiredProperty("intermediatePageDesign", stringSchema().nullable())
@@ -58,7 +58,8 @@ class GetLinkRedirectsAPI(
             mapOf(
                 "title" to redirect.title,
                 "path" to redirect.path,
-                "targetUrl" to redirect.targetUrl,
+                // Gated redirects keep their target private; the check route hands it out after the gate.
+                "targetUrl" to if (redirect.requireLogin || redirect.requirePermission) null else redirect.targetUrl,
                 "delay" to redirect.delay,
                 "showIntermediatePage" to redirect.showIntermediatePage,
                 "intermediatePageDesign" to redirect.intermediatePageDesign,

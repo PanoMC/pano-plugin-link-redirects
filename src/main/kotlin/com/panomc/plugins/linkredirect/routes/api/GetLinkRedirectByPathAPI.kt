@@ -65,15 +65,16 @@ class GetLinkRedirectByPathAPI(
         val sqlClient = databaseManager.getSqlClient()
         val redirect = linkRedirectDao.getByPath(path, sqlClient) ?: throw NotFound()
 
-        if (redirect.requireLogin) {
+        // A permission gate always implies a login gate.
+        if (redirect.requireLogin || redirect.requirePermission) {
             val userId = authProvider.getUserIdFromRoutingContext(context)
             if (userId == null) {
                 throw NotLoggedIn()
             }
 
-            if (redirect.requirePermission && redirect.permissionNode != null) {
-                val hasPermission = permissionManager.hasPermissionNode(userId, redirect.permissionNode)
-                if (!hasPermission) {
+            if (redirect.requirePermission) {
+                val permissionNode = redirect.permissionNode
+                if (permissionNode.isNullOrBlank() || !permissionManager.hasPermissionNode(userId, permissionNode)) {
                     throw NoPermission()
                 }
             }

@@ -99,7 +99,8 @@ class PanelAddLinkRedirectAPI(
             useCustomPage = data.getBoolean("useCustomPage") ?: false,
             openInNewTab = data.getBoolean("openInNewTab") ?: false,
             showInNavigation = data.getBoolean("showInNavigation") ?: false,
-            requireLogin = data.getBoolean("requireLogin") ?: false,
+            // A permission gate always implies a login gate.
+            requireLogin = (data.getBoolean("requireLogin") ?: false) || (data.getBoolean("requirePermission") ?: false),
             requirePermission = data.getBoolean("requirePermission") ?: false,
             permissionNode = data.getString("permissionNode"),
             htmlContent = RedirectSafety.sanitizeHtml(data.getString("htmlContent"))
