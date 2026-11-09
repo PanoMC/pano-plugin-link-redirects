@@ -185,11 +185,20 @@
     }
   }
 
+  /** The stored path is the decoded one; a pathname with broken percent-escapes is used as it is. */
+  function safeDecodePath(pathname) {
+    try {
+      return decodeURIComponent(pathname);
+    } catch (e) {
+      return pathname;
+    }
+  }
+
   export async function load(event) {
     const currentPath = event.url.pathname;
 
     const res = await api.get({
-      path: `/link-redirects/check?path=${currentPath}`,
+      path: `/link-redirects/check?path=${encodeURIComponent(safeDecodePath(currentPath))}`,
       request: event
     });
 
