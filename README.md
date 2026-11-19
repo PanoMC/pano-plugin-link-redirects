@@ -13,7 +13,8 @@
 
 Give your players short, easy links. Link Redirects turns addresses like yoursite.com/discord or yoursite.com/map into links to any page you choose. Share one simple link everywhere, change where it goes any time, and even add it to your website menu.
 
-## ✨ Features
+<h3 align="center">Features</h3>
+
 - 🔗 **Short links**: create easy addresses like /discord, /map or /apply on your own website.
 - ⏳ **Waiting page**: show a "Redirecting..." page with a countdown before players leave.
 - 🎨 **Several designs**: pick a default, minimal or modern waiting page, or build your own.
@@ -22,20 +23,24 @@ Give your players short, easy links. Link Redirects turns addresses like yoursit
 - 🔒 **Members only**: require players to log in, or to have a certain rank, before the link works.
 - ✏️ **Change any time**: update where a link goes without changing the link you already shared.
 
-## 📸 Screenshots
+<h3 align="center">Screenshots</h3>
+
 <p align="center"><img src=".github/assets/edit.png" alt="Editing a redirect in the Pano panel" width="900" /></p>
 <p align="center"><i>Set the address, delay, design and who can use each link.</i></p>
 
 <p align="center"><img src=".github/assets/redirect-page.png" alt="The modern waiting page" width="900" /></p>
 <p align="center"><i>The modern waiting page players see before they are sent on.</i></p>
 
-## 🚀 Get started
+<h3 align="center">Get started</h3>
+
 1. Open your Pano panel and go to **Addons**.
 2. Find **Link Redirects** and click **Install**.
 3. Open **Link Redirect** in your panel and click **Create Redirect**.
 
-## 💬 Support
+<h3 align="center">Support</h3>
+
 Questions or ideas? Join our [Discord](https://panomc.com/discord) or visit [panomc.com](https://panomc.com).
 
-## 📄 License
+<h3 align="center">License</h3>
+
 Released under the MIT License.
