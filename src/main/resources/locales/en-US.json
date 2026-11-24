@@ -13,9 +13,9 @@
   },
   "pages": {
     "redirects": {
-      "title": "Link Redirect",
+      "title": "Link redirects",
       "new-redirect": "Create Redirect",
-      "count": "{count} Redirects",
+      "count": "{count, plural, one {# redirect} other {# redirects}}",
       "table": {
         "id": "ID",
         "title": "Title",
@@ -27,7 +27,7 @@
       "fields": {
         "title": "Title",
         "path": "Address",
-        "path-hint": "External address that will trigger the redirect",
+        "path-hint": "Opening this address starts the redirect",
         "path-hint-short": "Address",
         "target": "Redirect Link",
         "delay": "Delay",
@@ -37,7 +37,7 @@
         "show-in-nav": "Show in navigation",
         "require-login": "Require login",
         "require-permission": "Require permission",
-        "permission-node": "Permission Node",
+        "permission-node": "Permission node",
         "custom-content": "Custom Page Content",
         "design-options": {
           "default": "Default",
@@ -61,7 +61,9 @@
         "create-success": "Link redirect created successfully.",
         "edit-success": "Link redirect updated successfully.",
         "delete-success": "Link redirect deleted successfully.",
-        "copy-success": "Link copied to clipboard."
+        "copy-success": "Link copied to clipboard.",
+        "save-error": "Failed to save the redirect.",
+        "delete-error": "Failed to delete the redirect."
       },
       "actions": {
         "label": "Actions",
@@ -73,7 +75,7 @@
         "redirecting-to-in": "Redirecting to {hostname} in {seconds}s...",
         "taking-you-to": "Taking you to {hostname}",
         "please-wait": "Please wait while we redirect you...",
-        "redirect-in": "You will be redirected in {seconds} seconds.",
+        "redirect-in": "You will be redirected in {seconds, plural, one {# second} other {# seconds}}.",
         "redirecting-now": "You are being redirected..."
       }
     }
@@ -81,7 +83,7 @@
   "permissions": {
     "MANAGE_REDIRECTS": {
       "title": "Edit Redirects",
-      "description": "Can create, delete and edit a redirect which will be used in theme."
+      "description": "Can create, edit and delete link redirects."
     }
   },
   "activity-logs": {

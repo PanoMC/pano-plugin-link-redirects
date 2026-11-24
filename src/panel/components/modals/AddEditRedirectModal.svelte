@@ -14,7 +14,7 @@
         <div class="vstack gap-3">
           <div class="row g-3">
             <div class="col-md-6">
-              <label for="redirect-title" class="form-label text-capitalize"
+              <label for="redirect-title" class="form-label"
                 >{$_('pages.redirects.fields.title')}</label>
               <input
                 type="text"
@@ -24,7 +24,7 @@
                 required />
             </div>
             <div class="col-md-6">
-              <label for="redirect-path" class="form-label text-capitalize"
+              <label for="redirect-path" class="form-label"
                 >{$_('pages.redirects.fields.path')}</label>
               <div class="input-group">
                 <span class="input-group-text">/</span>
@@ -53,7 +53,7 @@
               </div>
             </div>
             <div class="col-12">
-              <label for="redirect-target" class="form-label text-capitalize"
+              <label for="redirect-target" class="form-label"
                 >{$_('pages.redirects.fields.target')}</label>
               <input
                 type="url"
@@ -73,7 +73,7 @@
                   type="checkbox"
                   id="redirect-intermediate"
                   bind:checked={$formData.showIntermediatePage} />
-                <label class="form-check-label text-capitalize" for="redirect-intermediate">
+                <label class="form-check-label" for="redirect-intermediate">
                   {$_('pages.redirects.fields.show-intermediate')}
                 </label>
               </div>
@@ -86,7 +86,7 @@
                   type="checkbox"
                   id="redirect-nav"
                   bind:checked={$formData.showInNavigation} />
-                <label class="form-check-label text-capitalize" for="redirect-nav">
+                <label class="form-check-label" for="redirect-nav">
                   {$_('pages.redirects.fields.show-in-nav')}
                 </label>
               </div>
@@ -98,7 +98,7 @@
                   disabled={!$formData.showInNavigation}
                   bind:checked={$formData.openInNewTab} />
                 <label
-                  class="form-check-label text-capitalize"
+                  class="form-check-label"
                   class:text-muted={!$formData.showInNavigation}
                   for="redirect-new-tab">
                   {$_('pages.redirects.fields.open-new-tab')}
@@ -111,7 +111,7 @@
                 <div class="col-12 col-md-6">
                   <label
                     for="redirect-delay"
-                    class="form-label small text-capitalize mb-1"
+                    class="form-label small mb-1"
                     class:text-muted={!$formData.showIntermediatePage}>
                     {$_('pages.redirects.fields.delay')}</label>
                   <div class="input-group input-group-sm">
@@ -129,7 +129,7 @@
                 <div class="col-12 col-md-6">
                   <label
                     for="redirect-design"
-                    class="form-label small text-capitalize mb-1"
+                    class="form-label small mb-1"
                     class:text-muted={!$formData.showIntermediatePage}>
                     {$_('pages.redirects.fields.design')}</label>
                   <select
@@ -152,7 +152,7 @@
 
             {#if $formData.showIntermediatePage && $formData.intermediatePageDesign === 'CUSTOM'}
               <div class="col-12 mt-2">
-                <label for="redirect-custom-content" class="form-label fw-bold small text-capitalize"
+                <label for="redirect-custom-content" class="form-label fw-bold small"
                   >{$_('pages.redirects.fields.custom-content')}</label>
                 <Editor
                   id="redirect-custom-content"
@@ -174,7 +174,7 @@
                   type="checkbox"
                   id="redirect-login"
                   bind:checked={$formData.requireLogin} />
-                <label class="form-check-label text-capitalize" for="redirect-login">
+                <label class="form-check-label" for="redirect-login">
                   {$_('pages.redirects.fields.require-login')}
                 </label>
               </div>
@@ -186,14 +186,14 @@
                   type="checkbox"
                   id="redirect-perm-req"
                   bind:checked={$formData.requirePermission} />
-                <label class="form-check-label text-capitalize" for="redirect-perm-req">
+                <label class="form-check-label" for="redirect-perm-req">
                   {$_('pages.redirects.fields.require-permission')}
                 </label>
               </div>
 
               {#if $formData.requirePermission}
                 <div class="ms-4">
-                  <label for="redirect-perm-node" class="form-label small text-capitalize"
+                  <label for="redirect-perm-node" class="form-label small"
                     >{$_('pages.redirects.fields.permission-node')}</label>
                   <input
                     type="text"
@@ -360,7 +360,7 @@
         `plugins.pano-plugin-link-redirects.pages.redirects.toasts.${$mode}-success`,
       );
     } else {
-      showErrorToast(`common.error`);
+      showErrorToast('plugins.pano-plugin-link-redirects.pages.redirects.toasts.save-error');
     }
   }
 </script>

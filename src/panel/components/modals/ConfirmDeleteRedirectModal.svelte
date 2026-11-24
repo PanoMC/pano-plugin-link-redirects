@@ -79,7 +79,7 @@
       callback();
       showSuccessToast('plugins.pano-plugin-link-redirects.pages.redirects.toasts.delete-success');
     } else {
-      showErrorToast('common.error');
+      showErrorToast('plugins.pano-plugin-link-redirects.pages.redirects.toasts.delete-error');
     }
   }
 </script>

@@ -13,9 +13,9 @@
   },
   "pages": {
     "redirects": {
-      "title": "Yönlendirme",
+      "title": "Yönlendirmeler",
       "new-redirect": "Yönlendirme Oluştur",
-      "count": "{count} Yönlendirme",
+      "count": "{count} yönlendirme",
       "table": {
         "id": "ID",
         "title": "Başlık",
@@ -27,15 +27,15 @@
       "fields": {
         "title": "Başlık",
         "path": "Adres",
-        "path-hint": "Yönlendirmeyi tetikleyecek dış adres",
+        "path-hint": "Bu adres açıldığında yönlendirme başlar",
         "path-hint-short": "Adres",
         "target": "Yönlendirme Bağlantısı",
         "delay": "Gecikme",
         "show-intermediate": "Ara sayfa göster",
         "design": "Tasarım",
         "open-new-tab": "Yeni sekmede aç",
-        "show-in-nav": "Navigasyonda göster",
-        "require-login": "Giriş yapmışsa",
+        "show-in-nav": "Menüde göster",
+        "require-login": "Giriş gereksin",
         "require-permission": "Yetki gereksin",
         "permission-node": "Yetki Düğümü",
         "custom-content": "Özel Sayfa İçeriği",
@@ -53,7 +53,7 @@
       },
       "modals": {
         "create-title": "Yönlendirme Oluştur",
-        "edit-title": "Yönlendirme Düzenle",
+        "edit-title": "Yönlendirmeyi Düzenle",
         "delete-title": "Yönlendirmeyi Sil",
         "delete-confirm": "{title} yönlendirmesini silmek istediğinize emin misiniz? Bu işlem geri alınamaz."
       },
@@ -61,7 +61,9 @@
         "create-success": "Yönlendirme başarıyla oluşturuldu.",
         "edit-success": "Yönlendirme başarıyla güncellendi.",
         "delete-success": "Yönlendirme başarıyla silindi.",
-        "copy-success": "Bağlantı panoya kopyalandı."
+        "copy-success": "Bağlantı panoya kopyalandı.",
+        "save-error": "Yönlendirme kaydedilemedi.",
+        "delete-error": "Yönlendirme silinemedi."
       },
       "actions": {
         "label": "İşlemler",
